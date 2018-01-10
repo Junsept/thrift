@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+	<!--连接池配置 -->
+    <bean id="connectionProvider" class="rpc.core.thread.thriftpool.ConnectionProviderImpl">
+        <property name="serviceIP" value="132.32.3.183" />
+        <property name="servicePort" value="8088" />
+        <property name="maxActive" value="1000" />
+        <property name="maxIdle" value="1000" />
+        <property name="testOnBorrow" value="true" />
+        <property name="testOnReturn" value="true" />
+        <property name="testWhileIdle" value="true" />
+        <property name="conTimeOut" value="100000" />
+    </bean>
+
+     <bean id="connectionManager" class="rpc.core.thread.thriftpool.ConnectionManager">
+        <property name="connectionProvider" ref="connectionProvider"/>
+    </bean>
+
+    <bean id="thriftClientProxy" class="rpc.core.thread.ThriftClientProxy">
+        <property name="connectionManager" ref="connectionManager"/>
+    </bean>
+
+
+
+
+</beans>
